@@ -46,8 +46,6 @@ class SalesItemServiceTest {
 		list.add(SalesItemFixture.createSalesItemWithId(4L));
 		list.add(SalesItemFixture.createSalesItemWithId(5L));
 		pageRequest = PageRequest.of(0, 2, Sort.by(Sort.Direction.DESC, "minPriceWanted"));
-
-		System.out.println(pageRequest.getPageSize());
 	}
 
 
@@ -88,11 +86,11 @@ class SalesItemServiceTest {
 		Page<SalesItem> salesItemsPage = salesItemService.readAllWithPage(pageRequest);
 
 		//then
-		assertThat(salesItemsPage.getContent().size()).isEqualTo(pageList.size());
+		assertThat(salesItemsPage.getContent()).hasSameSizeAs(pageList);
 		assertThat(salesItemsPage.getTotalElements()).isEqualTo(list.size());
 		assertThat(salesItemsPage.getPageable()).isEqualTo(pageRequest);
 
-		verify(salesItemRepository).findAll(pageRequest);
+		verify(salesItemRepository).findAllPages(pageRequest);
 	}
 
 }
