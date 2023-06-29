@@ -1,5 +1,9 @@
 package com.mutsa.mutsamarket.domain.salesitem.service;
 
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.mutsa.mutsamarket.common.exception.BusinessException;
@@ -20,5 +24,18 @@ public class SalesItemService {
 		}catch (Exception e){
 			throw new BusinessException(ErrorCode.DUPLICATED_ITEM_ERROR);
 		}
+	}
+
+	public List<SalesItem> readAll(){
+		return salesItemRepository.findAll();
+	}
+
+	public Page<SalesItem> readAllWithPage(Pageable pageable){
+		return salesItemRepository.findAllPages(pageable);
+	}
+
+	public SalesItem readOne(Long id){
+		return salesItemRepository.findById(id)
+			.orElseThrow(()-> new BusinessException(ErrorCode.ITEM_NOT_FOUND));
 	}
 }
