@@ -80,7 +80,7 @@ class SalesItemServiceTest {
 		List<SalesItem> pageList = list.subList(0, 2);
 		Page<SalesItem> page = new PageImpl<>(pageList, pageRequest, list.size());
 
-		when(salesItemRepository.findAllPages(any(Pageable.class))).thenReturn(page);
+		when(salesItemRepository.findAll(any(Pageable.class))).thenReturn(page);
 
 		//when
 		Page<SalesItem> salesItemsPage = salesItemService.readAllWithPage(pageRequest);
@@ -90,7 +90,7 @@ class SalesItemServiceTest {
 		assertThat(salesItemsPage.getTotalElements()).isEqualTo(list.size());
 		assertThat(salesItemsPage.getPageable()).isEqualTo(pageRequest);
 
-		verify(salesItemRepository).findAllPages(pageRequest);
+		verify(salesItemRepository).findAll(pageRequest);
 	}
 
 }
