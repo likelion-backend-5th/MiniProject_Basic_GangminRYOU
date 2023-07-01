@@ -31,11 +31,13 @@ public class SalesItemService {
 	}
 
 	public Page<SalesItem> readAllWithPage(Pageable pageable){
-		return salesItemRepository.findAllPages(pageable);
+		return salesItemRepository.findAll(pageable);
 	}
 
 	public SalesItem readOne(Long id){
 		return salesItemRepository.findById(id)
 			.orElseThrow(()-> new BusinessException(ErrorCode.ITEM_NOT_FOUND));
 	}
+
+
 }
