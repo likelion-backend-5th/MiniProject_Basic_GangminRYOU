@@ -2,6 +2,8 @@ package com.mutsa.mutsamarket.domain.salesitem.entity;
 
 import java.security.MessageDigest;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
 
@@ -53,17 +55,23 @@ public class SalesItem {
 		this.password = password;
 	}
 
-	public void setPasswordToRegister(String password){
-		this.password = password;
+	public void update(String title, String description, Integer minPriceWanted, Status status){
+		this.title = title;
+		this.description = description;
+		this.minPriceWanted = minPriceWanted;
+		this.status =status;
 	}
 
-	public void encodePassword(String password){
+	public void encodePassword(PasswordEncoder passwordEncoder){
 		try{
-			MessageDigest digest = MessageDigest.getInstance("SHA-256");
-			this.password = digest.digest(password.getBytes()).toString();
+			passwordEncoder.encode(password);
 		} catch (Exception e){
-			throw new BusinessException(ErrorCode.HASHING_ERROR);
+			throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
+	}
+
+	public void updateImage(String imageUrl){
+		this.imageUrl = imageUrl;
 	}
 
 	@PostConstruct
