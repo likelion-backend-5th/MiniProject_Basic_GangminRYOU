@@ -1,11 +1,8 @@
-package com.mutsa.mutsamarket.domain.salesitem.dto.request;
+package com.mutsa.mutsamarket.web.salesitem.dto.request;
 
 import com.mutsa.mutsamarket.domain.salesitem.entity.Status;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;

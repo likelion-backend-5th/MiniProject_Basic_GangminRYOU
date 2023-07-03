@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mutsa.mutsamarket.api.file.dto.FileResponse;
 import com.mutsa.mutsamarket.api.file.dto.request.ImageUpdateRequest;
-import com.mutsa.mutsamarket.domain.salesitem.dto.SalesItemMapper;
-import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemSave;
-import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemUpdateRequest;
-import com.mutsa.mutsamarket.domain.salesitem.dto.response.SalesItemResponse;
-import com.mutsa.mutsamarket.domain.salesitem.dto.response.ResultMessageResponse;
+import com.mutsa.mutsamarket.web.salesitem.dto.SalesItemMapper;
+import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemSave;
+import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemUpdateRequest;
+import com.mutsa.mutsamarket.web.salesitem.dto.response.SalesItemResponse;
+import com.mutsa.mutsamarket.web.salesitem.dto.response.ResultMessageResponse;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.service.SalesItemService;
 
