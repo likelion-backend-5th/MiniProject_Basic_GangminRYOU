@@ -42,6 +42,14 @@ public class Comment {
 		this.salesItem = salesItem;
 	}
 
+	public void changeContent(String content){
+		this.content = content;
+	}
+
+	public void changeReply(String reply){
+		this.reply = reply;
+	}
+
 	@Builder
 	public Comment(SalesItem salesItem, String writer, String password, String content, String reply) {
 		this.salesItem = salesItem;
