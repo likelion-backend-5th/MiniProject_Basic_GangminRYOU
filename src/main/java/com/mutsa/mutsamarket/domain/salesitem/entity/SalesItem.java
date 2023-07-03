@@ -1,11 +1,14 @@
 package com.mutsa.mutsamarket.domain.salesitem.entity;
 
-import java.security.MessageDigest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
+import com.mutsa.mutsamarket.domain.comment.entity.Comment;
 
 import jakarta.annotation.PostConstruct;
 import jakarta.persistence.Column;
@@ -16,6 +19,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +46,9 @@ public class SalesItem {
 	private String writer;
 	private String password;
 
+	@OneToMany(mappedBy = "salesItem")
+	private List<Comment> comments = new ArrayList<>();
+
 	@Builder
 	public SalesItem(String title, String description, String imageUrl, int minPriceWanted, Status status,
 		String writer,
@@ -53,6 +60,10 @@ public class SalesItem {
 		this.status = status;
 		this.writer = writer;
 		this.password = password;
+	}
+
+	public void addComment(Comment comment){
+		this.comments.add(comment);
 	}
 
 	public void update(String title, String description, Integer minPriceWanted, Status status){

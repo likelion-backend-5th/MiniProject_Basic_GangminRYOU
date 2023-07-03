@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.test.util.ReflectionTestUtils;
 
-import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemSave;
+import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemSave;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 
 public class SalesItemFixture {

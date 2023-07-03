@@ -1,4 +1,4 @@
-package com.mutsa.mutsamarket.domain.salesitem.dto.request;
+package com.mutsa.mutsamarket.web.salesitem.dto.request;
 
 import com.mutsa.mutsamarket.domain.salesitem.entity.Status;
 
