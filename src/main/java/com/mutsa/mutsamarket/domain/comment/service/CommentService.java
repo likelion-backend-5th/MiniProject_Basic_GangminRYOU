@@ -1,6 +1,9 @@
 package com.mutsa.mutsamarket.domain.comment.service;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 	private final CommentRepository commentRepository;
 	private final SalesItemRepository salesItemRepository;
+	private final PasswordEncoder passwordEncoder;
 	public Comment save(Long itemId, Comment comment){
 		try {
 			SalesItem targetItem = salesItemRepository.findByIdOrThrow(itemId);
@@ -30,9 +34,39 @@ public class CommentService {
 		}
 	}
 
+	@Transactional(readOnly = true)
+	public Page<Comment> readAllByPage(Long itemId){
+		PageRequest pageRequest = PageRequest.of(0, 25);
+		return commentRepository.findAllBySalesItem(itemId, pageRequest);
+	}
 
+	public void updateOne(Long commentId, String content, String rawPassword){
+		Comment foundComment = commentRepository.findByIdOrThrow(commentId);
+		/*중복이 계속됨.. 개선 필요*/
+		if(!passwordEncoder.matches(rawPassword, foundComment.getPassword())){
+			throw new BusinessException(ErrorCode.WRONG_PASSWORD_ERROR);
+		}
+		foundComment.changeContent(content);
+	}
 
+	public void deleteOne(Long commentId, String rawPassword){
+		Comment foundComment = commentRepository.findByIdOrThrow(commentId);
+		/*중복이 계속됨.. 개선 필요
+		* */
+		if(!passwordEncoder.matches(rawPassword, foundComment.getPassword())){
+			throw new BusinessException(ErrorCode.WRONG_PASSWORD_ERROR);
+		}
+		commentRepository.deleteById(commentId);
+	}
 
-
+	public void updateReply(Long commentId, String reply, String rawPassword){
+		Comment foundComment = commentRepository.findByIdOrThrow(commentId);
+		/*fetchJoin사용하는게 낫다.*/
+		SalesItem salesItem = foundComment.getSalesItem();
+		if(!passwordEncoder.matches(rawPassword, salesItem.getPassword())){
+			throw new BusinessException(ErrorCode.WRONG_PASSWORD_ERROR);
+		}
+		foundComment.changeReply(reply);
+	}
 
 }
