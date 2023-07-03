@@ -1,9 +1,8 @@
-package com.mutsa.mutsamarket.domain.salesitem.dto.response;
+package com.mutsa.mutsamarket.web.salesitem.dto.response;
 
 import com.mutsa.mutsamarket.domain.salesitem.entity.Status;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.Builder;
 import lombok.Data;
 

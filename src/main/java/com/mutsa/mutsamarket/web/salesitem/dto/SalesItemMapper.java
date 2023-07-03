@@ -1,11 +1,11 @@
-package com.mutsa.mutsamarket.domain.salesitem.dto;
+package com.mutsa.mutsamarket.web.salesitem.dto;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemSave;
-import com.mutsa.mutsamarket.domain.salesitem.dto.response.SalesItemResponse;
+import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemSave;
+import com.mutsa.mutsamarket.web.salesitem.dto.response.SalesItemResponse;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 
 @Mapper(componentModel = "spring")

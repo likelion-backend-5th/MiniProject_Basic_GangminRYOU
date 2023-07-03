@@ -1,4 +1,4 @@
-package com.mutsa.mutsamarket.domain.salesitem.dto.response;
+package com.mutsa.mutsamarket.web.salesitem.dto.response;
 
 import com.mutsa.mutsamarket.api.file.dto.FileResponse;
 

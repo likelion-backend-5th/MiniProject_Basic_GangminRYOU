@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import com.mutsa.mutsamarket.domain.salesitem.dto.SalesItemMapper;
+import com.mutsa.mutsamarket.web.salesitem.dto.SalesItemMapper;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.service.SalesItemService;
 import com.mutsa.mutsamarket.utils.JsonUtil;
