@@ -5,19 +5,27 @@ package com.mutsa.mutsamarket.web.salesitem.controller;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.mutsa.mutsamarket.api.file.dto.FileResponse;
+import com.mutsa.mutsamarket.api.file.dto.request.ImageUpdateRequest;
 import com.mutsa.mutsamarket.domain.salesitem.dto.SalesItemMapper;
 import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemSave;
+import com.mutsa.mutsamarket.domain.salesitem.dto.request.SalesItemUpdateRequest;
 import com.mutsa.mutsamarket.domain.salesitem.dto.response.SalesItemResponse;
+import com.mutsa.mutsamarket.domain.salesitem.dto.response.SalesItemUpdateResponse;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.service.SalesItemService;
 
@@ -53,5 +61,15 @@ public class SalesItemController {
 			.status(i.getStatus()).build());
 	}
 
-
+	@PutMapping("/{itemId}")
+	public SalesItemUpdateResponse updateItem(@PathVariable("itemId") Long id, @RequestBody SalesItemUpdateRequest updateRequest){
+		salesItemService.updateOne(id, updateRequest.getTitle(), updateRequest.getDescription(),
+			updateRequest.getMinPriceWanted(), updateRequest.getStatus(), updateRequest.getPassword());
+		return new SalesItemUpdateResponse("물품이 수정되었습니다.");
+	}
+	@PutMapping(value = "/{itemId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public FileResponse updateItemImage(@PathVariable("itemId") Long id, @ModelAttribute ImageUpdateRequest updateRequest) {
+		return salesItemService.updateImage(id, updateRequest.getWriter(), updateRequest.getPassword(),
+			updateRequest.getImage());
+	}
 }
