@@ -13,6 +13,7 @@ import com.mutsa.mutsamarket.api.file.dto.FileResponse;
 import com.mutsa.mutsamarket.api.file.service.FileService;
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
+
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.entity.Status;
 import com.mutsa.mutsamarket.domain.salesitem.repository.SalesItemRepository;
@@ -35,14 +36,17 @@ public class SalesItemService {
 		}
 	}
 
+	@Transactional(readOnly = true)
 	public List<SalesItem> readAll(){
 		return salesItemRepository.findAll();
 	}
 
+	@Transactional(readOnly = true)
 	public Page<SalesItem> readAllWithPage(Pageable pageable){
 		return salesItemRepository.findAll(pageable);
 	}
 
+	@Transactional(readOnly = true)
 	public SalesItem readOne(Long id){
 		return salesItemRepository.findById(id)
 			.orElseThrow(()-> new BusinessException(ErrorCode.ITEM_NOT_FOUND));
@@ -68,5 +72,13 @@ public class SalesItemService {
 		FileResponse fileResponse = fileService.storeAsHash(file);
 		salesItem.updateImage(fileResponse.getFileName());
 		return fileResponse;
+	}
+
+	public void deleteOne(Long id, String rawPassword){
+		SalesItem deleteItem = salesItemRepository.findByIdOrThrow(id);
+		if(!passwordEncoder.matches(rawPassword, deleteItem.getPassword())){
+			throw new BusinessException(ErrorCode.WRONG_PASSWORD_ERROR);
+		}
+		salesItemRepository.deleteById(id);
 	}
 }
