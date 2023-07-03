@@ -19,6 +19,7 @@ public class SalesItemFixture {
 		.description("상품 설명1")
 		.minPriceWanted(1000)
 		.writer("작성자1")
+		.password("1234")
 		.build();
 	public static final List<SalesItem> TEST_SALES_ITEM_LIST = createSalesItemList();
 
@@ -28,6 +29,7 @@ public class SalesItemFixture {
 			.description("상품 설명")
 			.minPriceWanted(100)
 			.writer("작성자")
+			.password("1234")
 			.build();
 	}
 
