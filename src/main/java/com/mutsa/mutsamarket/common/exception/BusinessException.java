@@ -9,7 +9,7 @@ public class BusinessException extends RuntimeException{
 	}
 
 	public BusinessException(ErrorCode errorCode){
-		this(errorCode, null);
+		this(errorCode, errorCode.getMessage());
 	}
 
 	private final ErrorCode errorCode;
