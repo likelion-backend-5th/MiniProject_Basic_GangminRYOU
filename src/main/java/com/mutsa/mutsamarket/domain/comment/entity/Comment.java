@@ -1,5 +1,7 @@
 package com.mutsa.mutsamarket.domain.comment.entity;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 
 import jakarta.persistence.CascadeType;
@@ -40,6 +42,11 @@ public class Comment {
 
 	public void connectItem(SalesItem salesItem){
 		this.salesItem = salesItem;
+		salesItem.addComment(this);
+	}
+
+	public void encodePassword(PasswordEncoder passwordEncoder){
+		this.password = passwordEncoder.encode(password);
 	}
 
 	public void changeContent(String content){

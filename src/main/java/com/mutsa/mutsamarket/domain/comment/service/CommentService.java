@@ -1,8 +1,11 @@
 package com.mutsa.mutsamarket.domain.comment.service;
 
+import java.util.List;
+
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +30,7 @@ public class CommentService {
 		try {
 			SalesItem targetItem = salesItemRepository.findByIdOrThrow(itemId);
 			comment.connectItem(targetItem);
-			targetItem.addComment(comment);
+			comment.encodePassword(passwordEncoder);
 			return commentRepository.save(comment);
 		}catch (DataIntegrityViolationException e){
 			throw new BusinessException(ErrorCode.DUPLICATED_COMMENT_ERROR);
@@ -37,7 +40,9 @@ public class CommentService {
 	@Transactional(readOnly = true)
 	public Page<Comment> readAllByPage(Long itemId){
 		PageRequest pageRequest = PageRequest.of(0, 25);
-		return commentRepository.findAllBySalesItem(itemId, pageRequest);
+		SalesItem item = salesItemRepository.findByIdOrThrow(itemId);
+		List<Comment> comments = item.getComments();
+		return PageableExecutionUtils.getPage(comments, pageRequest, comments::size);
 	}
 
 	public void updateOne(Long commentId, String content, String rawPassword){
