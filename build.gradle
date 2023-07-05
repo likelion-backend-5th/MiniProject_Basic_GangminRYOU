@@ -32,9 +32,8 @@ dependencies {
     //validation도입
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-    //MapStruct도입
-    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
-    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+
+
 
     //PasswordEncoder도입
     implementation 'org.springframework.security:spring-security-crypto'
@@ -47,6 +46,10 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    //MapStruct도입
+    implementation 'org.mapstruct:mapstruct:1.5.5.Final'
+    annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
 }
 
 tasks.named('test') {
