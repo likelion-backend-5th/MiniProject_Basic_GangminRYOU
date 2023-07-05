@@ -1,0 +1,58 @@
+### 제안 생성
+
+POST localhost:8080/items/1/proposals
+Content-Type: application/json
+
+{
+  "writer": "gangmin",
+  "password": "1234",
+  "suggestedPrice": 1000000
+}
+
+### 제안 조회
+
+GET localhost:8080/items/1/proposals?writer=jeeho.dev&password=1qaz2wsx&page=1
+
+
+### 제안 수정
+
+PUT localhost:8080/items/1/proposals/1
+Content-Type: application/json
+
+{
+  "writer": "gangmin",
+  "password": "1234",
+  "suggestedPrice": 1100000
+}
+
+### 제안 삭제
+
+DELETE localhost:8080/items/1/proposals/1
+Content-Type: application/json
+
+{
+"writer": "gangmin",
+"password": "1234"
+}
+
+### 제안 수락
+
+PUT localhost:8080/items/1/proposals/1/accept
+Content-Type: application/json
+
+{
+  "writer": "jeeho.dev",
+  "password": "1qaz2wsx",
+  "status": "ACCEPTED"
+}
+
+### 제안 확정
+
+PUT localhost:8080/items/1/proposals/1/confirm
+Content-Type: application/json
+
+{
+  "writer": "gangmin",
+  "password": "1234",
+  "status": "CONFIRMED"
+}
