@@ -1,4 +1,4 @@
-package com.mutsa.mutsamarket.web.comment.dto.request;
+package com.mutsa.mutsamarket.web.salesitem.dto.request;
 
 import lombok.Builder;
 import lombok.Data;
@@ -6,15 +6,13 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class CommentUpdate {
+public class Auth {
 	private String writer;
 	private String password;
-	private String content;
 
 	@Builder
-	public CommentUpdate(String writer, String password, String content) {
+	public Auth(String writer, String password) {
 		this.writer = writer;
 		this.password = password;
-		this.content = content;
 	}
 }

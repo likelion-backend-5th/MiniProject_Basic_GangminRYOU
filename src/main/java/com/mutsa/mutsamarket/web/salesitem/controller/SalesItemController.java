@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mutsa.mutsamarket.api.file.dto.FileResponse;
 import com.mutsa.mutsamarket.api.file.dto.request.ImageUpdateRequest;
+
 import com.mutsa.mutsamarket.web.salesitem.dto.SalesItemMapper;
+import com.mutsa.mutsamarket.web.salesitem.dto.request.Auth;
 import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemSave;
 import com.mutsa.mutsamarket.web.salesitem.dto.request.SalesItemUpdateRequest;
 import com.mutsa.mutsamarket.web.salesitem.dto.response.SalesItemResponse;
@@ -52,7 +54,7 @@ public class SalesItemController {
 
 	@GetMapping
 	public Page<SalesItemResponse> readPages(@RequestParam Integer page, @RequestParam Integer limit) {
-		PageRequest pageRequest = PageRequest.of(page, limit);
+		PageRequest pageRequest = PageRequest.of(page - 1, limit);
 		Page<SalesItem> itempages = salesItemService.readAllWithPage(pageRequest);
 		return itempages.map(i -> SalesItemResponse.builder()
 			.title(i.getTitle())
@@ -74,8 +76,8 @@ public class SalesItemController {
 	}
 
 	@DeleteMapping("/{itemId}")
-	public ResultMessageResponse deleteItem(@PathVariable("itemId") Long id, @RequestParam String writer, @RequestParam String password){
-		salesItemService.deleteOne(id, password);
+	public ResultMessageResponse deleteItem(@PathVariable("itemId") Long id, @RequestBody Auth auth){
+		salesItemService.deleteOne(id, auth.getPassword());
 		return new ResultMessageResponse("물품을 삭제했습니다.");
 	}
 }

@@ -1,0 +1,50 @@
+
+### 제품 등록
+
+POST http://localhost:8080/items
+Content-Type: application/json
+
+{
+  "title": "중고 맥북 팝니다",
+  "description": "2019년 맥북 프로 13인치 모델입니다",
+  "minPriceWanted": 1000000,
+  "writer": "jeeho.dev",
+  "password": "1qaz2wsx"
+}
+
+### 제품 페이지 조회
+
+GET localhost:8080/items?page=1&limit=2
+
+### 단건 조회
+
+GET localhost:8080/items/1
+
+
+### 제품 수정
+
+PUT localhost:8080/items/1
+Content-Type: application/json
+
+{
+    "title": "중고 맥북 팝니다",
+    "description": "2019년 맥북 프로 13인치 모델입니다",
+    "minPriceWanted": 1250000,
+    "writer": "jeeho.dev",
+    "password": "1qaz2wsx"
+}
+
+### 이미지 등록
+
+PUT localhost:8080/items/1/image
+Content-Type: application/x-www-form-urlencoded
+
+### 상품 삭제
+
+DELETE localhost:8080/items/1
+Content-Type: application/json
+
+{
+  "writer": "jeeho.dev",
+  "password": "1qaz2wsx"
+}

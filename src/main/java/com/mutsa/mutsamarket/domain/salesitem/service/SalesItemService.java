@@ -32,7 +32,7 @@ public class SalesItemService {
 			salesItem.encodePassword(passwordEncoder);
 			return salesItemRepository.save(salesItem);
 		}catch (Exception e){
-			throw new BusinessException(ErrorCode.DUPLICATED_ITEM_ERROR);
+			throw new BusinessException(ErrorCode.DUPLICATED_ITEM_ERROR, e.getMessage());
 		}
 	}
 

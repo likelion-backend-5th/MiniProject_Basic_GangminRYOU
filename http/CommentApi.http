@@ -1,0 +1,47 @@
+### 댓글 등록
+
+POST localhost:8080/items/1/comments
+Content-Type: application/json
+
+{
+  "writer": "jeeho.edu",
+  "password": "qwerty1234",
+  "content": "할인 가능하신가요?"
+}
+
+
+### 댓글 조회
+
+GET localhost:8080/items/1/comments
+
+### 댓글 수정
+
+PUT localhost:8080/items/1/comments/1
+Content-Type: application/json
+
+{
+  "writer": "jeeho.edu",
+  "password": "qwerty1234",
+  "content": "할인 가능하신가요? 1000000 정도면 고려 가능합니다"
+}
+
+### 답글 입력
+
+PUT localhost:8080/items/1/comments/1/reply
+Content-Type: application/json
+
+{
+  "writer": "jeeho.dev",
+  "password": "1qaz2wsx",
+  "reply": "안됩니다"
+}
+
+### 댓글삭제
+
+DELETE localhost:8080/items/1/comments/1
+Content-Type: application/json
+
+{
+  "writer": "jeeho.edu",
+  "password": "qwerty1234"
+}
