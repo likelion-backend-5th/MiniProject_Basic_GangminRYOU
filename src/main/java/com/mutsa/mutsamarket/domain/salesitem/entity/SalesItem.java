@@ -9,8 +9,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
 import com.mutsa.mutsamarket.domain.comment.entity.Comment;
+import com.mutsa.mutsamarket.domain.negotiation.entity.Negotiation;
 
 import jakarta.annotation.PostConstruct;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -46,8 +48,11 @@ public class SalesItem {
 	private String writer;
 	private String password;
 
-	@OneToMany(mappedBy = "salesItem")
+	@OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
+
+	@OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)
+	private List<Negotiation> negotiations = new ArrayList<>();
 
 	@Builder
 	public SalesItem(String title, String description, String imageUrl, int minPriceWanted, Status status,
@@ -66,6 +71,7 @@ public class SalesItem {
 		this.comments.add(comment);
 	}
 
+	public void enrollNegotiataion(Negotiation negotiation){this.negotiations.add(negotiation);}
 	public void update(String title, String description, Integer minPriceWanted, Status status){
 		this.title = title;
 		this.description = description;
@@ -75,7 +81,7 @@ public class SalesItem {
 
 	public void encodePassword(PasswordEncoder passwordEncoder){
 		try{
-			passwordEncoder.encode(password);
+			this.password = passwordEncoder.encode(password);
 		} catch (Exception e){
 			throw new BusinessException(ErrorCode.INTERNAL_SERVER_ERROR);
 		}
