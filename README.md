@@ -212,283 +212,157 @@ Content-Type: application/json
 - MapStruct
   - 도메인 계층의 웹 의존성 분리를 위해, 컨트롤러에게 DTO 변환역할을 위임하였습니다. 
   - 그러다 보니 컨트롤러 로직이 더러워져, Mapper를 사용해 로직을 더 가독성있게 만들었고, 컨트롤러의 엔티티의존성을 없앴습니다.
+ 로그인 API (로그인):
+
+    Method: POST
+    URL: http://localhost:8080/auth/login
+    Request Body:
+
+    json
+
+    {
+      "email": "example@example.com",
+      "password": "password"
+    }
+
+    Response: 없음 (Response가 비어있습니다.)
+
+회원가입 API (회원가입):
+
+    Method: POST
+    URL: http://localhost:8080/auth/register
+    Request Body:
+
+    json
+
+    {
+      "email": "example@example.com",
+      "password": "password",
+      "passwordConfirm": "password",
+      "phoneNumber": "123-456-7890",
+      "address": "Sample Address",
+      "roles": ["USER"]
+    }
+
+    Response: 없음 (Response가 비어있습니다.)
+
+상품등록 API (상품등록):
+
+    Method: POST
+    URL: http://localhost:8080/items
+    Request Body:
+
+    json
+
+{
+  "title": "Sample Title",
+  "description": "Sample Description",
+  "minPriceWanted": 100,
+  "status": "ON_SALE",
+  "writer": "John Doe",
+  "password": "password123"
+}
+
+Request Header:
+
+makefile
+
+    Key: Authorization
+    Value: Bearer [Access Token]
+
+    Response: 없음 (Response가 비어있습니다.)
+
+상품조회 API (상품조회):
+
+    Method: GET
+    URL: http://localhost:8080/items?page=1&limit=1
+    Request Header:
+
+    makefile
+
+    Key: Authorization
+    Value: Bearer [Access Token]
+
+    Response: 없음 (Response가 비어있습니다.)
+
+협상 제안 API (협상 제안):
+
+    Method: POST
+    URL: http://localhost:8080/items/1/proposals
+    Request Body:
+
+    json
+
+{
+  "writer": "example@example.com",
+  "password": "password",
+  "suggestedPrice": 100
+}
+
+Request Header:
+
+makefile
+
+    Key: Authorization
+    Value: Bearer [Access Token]
+
+    Response: 없음 (Response가 비어있습니다.)
+
+내 협상 보기 API (내 협상 보기):
+
+    Method: GET
+    URL: http://localhost:8080/items/1/proposals?page=1&writer=John Doe&password=password123
+    Request Header:
+
+    makefile
+
+    Key: Authorization
+    Value: Bearer [Access Token]
+
+    Response: 없음 (Response가 비어있습니다.)
+
+내 댓글 보기 API (내 댓글 보기):
+
+    Method: GET
+    URL: http://localhost:8080/items/1/comments
+    Request Header:
+
+    makefile
+
+    Key: Authorization
+    Value: Bearer [Access Token]
+
+    Response: 없음 (Response가 비어있습니다.)
+
+댓글 등록 API (댓글 등록):
+
+    Method: POST
+    URL: http://localhost:8080/items/1/comments
+    Request Body:
+
+    json
+
+{
+  "salesItemId": 1,
+  "writer": "JohnDoe",
+  "password": "secretpassword",
+  "content": "This is the content of the sales item",
+  "reply": "This is the reply to the sales item"
+}
+
+Request Header:
+
+makefile
+
+Key: Authorization
+Value: Bearer [Access Token]
+
+Response: 없음 (Response가 비어있습니다.)
 
 
-[Uploading {
-	"info": {
-		"_postman_id": "679e7923-f4eb-42b3-955e-41a9bbcbb6a3",
-		"name": "멋마마켓-유강민",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "27334561",
-		"_collection_link": "https://www.postman.com/lunar-crescent-227721/workspace/mutsamarket2/collection/27334561-679e7923-f4eb-42b3-955e-41a9bbcbb6a3?action=share&creator=27334561&source=collection_link"
-	},
-	"item": [
-		{
-			"name": "로그인",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\" : \"example@example.com\",\r\n    \"password\" : \"password\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/auth/login",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"login"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "회원가입",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"email\": \"example@example.com\",\r\n    \"password\": \"password\",\r\n    \"passwordConfirm\": \"password\",\r\n    \"phoneNumber\": \"123-456-7890\",\r\n    \"address\": \"Sample Address\",\r\n    \"roles\": [\"USER\"]\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/auth/register",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"auth",
-						"register"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "상품등록",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"title\": \"Sample Title\",\r\n  \"description\": \"Sample Description\",\r\n  \"minPriceWanted\": 100,\r\n  \"status\": \"ON_SALE\",\r\n  \"writer\": \"John Doe\",\r\n  \"password\": \"password123\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/items",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "상품조회",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/items?page=1&limit=1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
-						},
-						{
-							"key": "limit",
-							"value": "1"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "협상 제안",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"writer\" : \"example@example.com\",\r\n    \"password\" : \"password\",\r\n    \"suggestedPrice\" : 100\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/items/1/proposals",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items",
-						"1",
-						"proposals"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "내 협상 보기",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/items/1/proposals?page=1&writer=John Doe&password=password123",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items",
-						"1",
-						"proposals"
-					],
-					"query": [
-						{
-							"key": "page",
-							"value": "1"
-						},
-						{
-							"key": "writer",
-							"value": "John Doe"
-						},
-						{
-							"key": "password",
-							"value": "password123"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "내 댓글 보기",
-			"request": {
-				"method": "GET",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"url": {
-					"raw": "http://localhost:8080/items/1/comments",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items",
-						"1",
-						"comments"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "댓글등록",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJleGFtcGxlQGV4YW1wbGUuY29tIiwiaWF0IjoxNjkwOTYxMzk2LCJleHAiOjE2OTExMjYzOTYsImF1dGgiOiJST0xFX1VTRVIifQ.BBUOaArSAfsooheLX1pV682d9SSazKmg-CEav6VChgTHoOCo4ah3DvIHhzjXcEEgIV7A4JiEM4LxHgNfSIuN_g",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n  \"salesItemId\": 1,\r\n  \"writer\": \"JohnDoe\",\r\n  \"password\": \"secretpassword\",\r\n  \"content\": \"This is the content of the sales item\",\r\n  \"reply\": \"This is the reply to the sales item\"\r\n}\r\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://localhost:8080/items/1/comments",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"items",
-						"1",
-						"comments"
-					]
-				}
-			},
-			"response": []
-		}
-	]
-}멋마마켓-유강민.postman_collection.json…]()
+
+미션 1 - 컬렉션
+
+https://www.postman.com/lunar-crescent-227721/workspace/mutsamarket2/collection/27334561-679e7923-f4eb-42b3-955e-41a9bbcbb6a3?action=share&creator=27334561
+
+
