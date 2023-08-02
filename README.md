@@ -212,6 +212,7 @@ Content-Type: application/json
 - MapStruct
   - 도메인 계층의 웹 의존성 분리를 위해, 컨트롤러에게 DTO 변환역할을 위임하였습니다. 
   - 그러다 보니 컨트롤러 로직이 더러워져, Mapper를 사용해 로직을 더 가독성있게 만들었고, 컨트롤러의 엔티티의존성을 없앴습니다.
+
 # API 명세
 
 ## 로그인 API (`로그인`)
@@ -219,21 +220,21 @@ Content-Type: application/json
 - Method: POST
 - URL: http://localhost:8080/auth/login
 - Request Body:
-  ```json
+```json
   {
     "email": "example@example.com",
     "password": "password"
   }
 
     Response: 없음 (Response가 비어있습니다.)
-
+```
 회원가입 API (회원가입)
-
+```
     Method: POST
     URL: http://localhost:8080/auth/register
     Request Body:
-
-    json
+```
+```json
 
     {
       "email": "example@example.com",
@@ -243,8 +244,8 @@ Content-Type: application/json
       "address": "Sample Address",
       "roles": ["USER"]
     }
-
-    Response: 없음 (Response가 비어있습니다.)
+```
+Response: 없음 (Response가 비어있습니다.)
 
 상품등록 API (상품등록)
 
@@ -252,7 +253,7 @@ Content-Type: application/json
     URL: http://localhost:8080/items
     Request Body:
 
-    json
+  ```json
 
 {
   "title": "Sample Title",
@@ -271,20 +272,19 @@ makefile
     Value: Bearer [Access Token]
 
     Response: 없음 (Response가 비어있습니다.)
-
+```
 상품조회 API (상품조회)
-
+```
     Method: GET
     URL: http://localhost:8080/items?page=1&limit=1
     Request Header:
-
     makefile
-
+  ```
     Key: Authorization
     Value: Bearer [Access Token]
 
     Response: 없음 (Response가 비어있습니다.)
-
+    ```
 협상 제안 API (협상 제안)
 
     Method: POST
