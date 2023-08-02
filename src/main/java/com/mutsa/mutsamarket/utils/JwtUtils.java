@@ -42,12 +42,14 @@ public class JwtUtils {
 	}
 
 	public String generateToken(UserDetails userDetails, Long expirationTime){
+		String authority = userDetails.getAuthorities().stream().findFirst().get().getAuthority();
 		Claims jwtClaims = Jwts.claims()
 			.setSubject(userDetails.getUsername())
 			.setIssuedAt(Date.from(Instant.now()))
 			.setExpiration(Date.from(Instant.now().plusSeconds(expirationTime)));
 		return Jwts.builder()
 			.setClaims(jwtClaims)
+			.claim("auth", authority)
 			.signWith(jwtSigningKey)
 			.compact();
 	}
@@ -66,7 +68,4 @@ public class JwtUtils {
 			.parseClaimsJws(token)
 			.getBody();
 	}
-
-
-
 }

@@ -1,4 +1,4 @@
-package com.mutsa.mutsamarket.api.auth;
+package com.mutsa.mutsamarket.api.auth.controller;
 
 import java.net.URI;
 
@@ -12,7 +12,7 @@ import com.mutsa.mutsamarket.api.auth.dto.MemberLogin;
 import com.mutsa.mutsamarket.api.auth.dto.MemberRegister;
 import com.mutsa.mutsamarket.api.auth.dto.TokenResponse;
 import com.mutsa.mutsamarket.api.auth.service.LoginService;
-import com.mutsa.mutsamarket.domain.member.dto.MemberMapper;
+
 import com.mutsa.mutsamarket.domain.member.service.MemberService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,12 +23,12 @@ import lombok.RequiredArgsConstructor;
 public class AuthController {
 
 	private final MemberService memberService;
-	private final MemberMapper memberMapper;
+
 	private final LoginService loginService;
 
 	@PostMapping("/register")
 	public ResponseEntity<Void> register(@RequestBody MemberRegister memberRegister){
-		Long savedId = memberService.save(memberMapper.toEntity(memberRegister));
+		Long savedId = memberService.save(memberRegister.getRoles(), memberRegister.toMember());
 		return ResponseEntity.created(URI.create("/members/" + savedId)).build();
 	}
 
@@ -37,6 +37,5 @@ public class AuthController {
 		var accessToken = loginService.authenticate(loginRequest);
 		return new TokenResponse(accessToken);
 	}
-
 
 }

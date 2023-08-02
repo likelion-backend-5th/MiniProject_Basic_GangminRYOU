@@ -14,6 +14,8 @@ import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
 import com.mutsa.mutsamarket.domain.comment.entity.Comment;
 import com.mutsa.mutsamarket.domain.comment.repository.CommentRepository;
+import com.mutsa.mutsamarket.domain.member.entity.Member;
+import com.mutsa.mutsamarket.domain.member.repository.MemberRepository;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.repository.SalesItemRepository;
 
@@ -25,11 +27,14 @@ import lombok.RequiredArgsConstructor;
 public class CommentService {
 	private final CommentRepository commentRepository;
 	private final SalesItemRepository salesItemRepository;
+	private final MemberRepository memberRepository;
 	private final PasswordEncoder passwordEncoder;
-	public Comment save(Long itemId, Comment comment){
+	public Comment save(Long itemId, String email, Comment comment){
 		try {
 			SalesItem targetItem = salesItemRepository.findByIdOrThrow(itemId);
 			comment.connectItem(targetItem);
+			Member member = memberRepository.findByEmailOrThrow(email);
+			comment.associateMember(member);
 			comment.encodePassword(passwordEncoder);
 			return commentRepository.save(comment);
 		}catch (DataIntegrityViolationException e){
