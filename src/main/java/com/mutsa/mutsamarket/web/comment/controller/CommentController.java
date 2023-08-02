@@ -2,6 +2,7 @@ package com.mutsa.mutsamarket.web.comment.controller;
 
 
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mutsa.mutsamarket.config.CustomUserDetails;
 import com.mutsa.mutsamarket.domain.comment.entity.Comment;
 import com.mutsa.mutsamarket.domain.comment.service.CommentService;
 import com.mutsa.mutsamarket.web.comment.dto.CommentMapper;
@@ -31,8 +33,11 @@ public class CommentController {
 	private final CommentMapper commentMapper;
 
 	@PostMapping
-	public ResultMessageResponse writeComment(@PathVariable Long itemId, @RequestBody CommentCreate comment){
-		commentService.save(itemId ,commentMapper.toEntity(comment));
+	public ResultMessageResponse writeComment(
+		@PathVariable Long itemId,
+		@RequestBody CommentCreate comment,
+		@AuthenticationPrincipal CustomUserDetails userDetails){
+		commentService.save(itemId, userDetails.getEmail(), commentMapper.toEntity(comment));
 		return new ResultMessageResponse("댓글이 등록되었습니다.");
 	}
 

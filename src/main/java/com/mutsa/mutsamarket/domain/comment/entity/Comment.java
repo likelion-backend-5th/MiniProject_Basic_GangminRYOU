@@ -2,6 +2,7 @@ package com.mutsa.mutsamarket.domain.comment.entity;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.mutsa.mutsamarket.domain.member.entity.Member;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 
 import jakarta.persistence.CascadeType;
@@ -29,6 +30,9 @@ public class Comment {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "item_id", nullable = false)
 	private SalesItem salesItem;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 
 	@Column(nullable = false)
 	private String writer;
@@ -40,11 +44,14 @@ public class Comment {
 
 	private String reply;
 
+
 	public void connectItem(SalesItem salesItem){
 		this.salesItem = salesItem;
 		salesItem.addComment(this);
 	}
-
+	public void associateMember(Member member){
+		this.member = member;
+	}
 	public void encodePassword(PasswordEncoder passwordEncoder){
 		this.password = passwordEncoder.encode(password);
 	}

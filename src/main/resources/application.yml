@@ -10,3 +10,7 @@ spring:
     console:
       enabled: true  # H2 Console을 사용할지 여부 (H2 Console은 H2 Database를 UI로 제공해주는 기능)
       path: /h2-console  # H2 Console의 Path
+
+jwt:
+  secret: KfakRD3w/zpvXM3wCmHg+RrV8NClz4D7gMQoMCzyDvLX3zZeGXgM4L7OiEWMYKGRhv6xjGkXMzbZDxTtpPdFkg==
+  access-token-expiration: 165000

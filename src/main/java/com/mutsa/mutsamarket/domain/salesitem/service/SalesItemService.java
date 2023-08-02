@@ -13,7 +13,7 @@ import com.mutsa.mutsamarket.api.file.dto.FileResponse;
 import com.mutsa.mutsamarket.api.file.service.FileService;
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
-
+import com.mutsa.mutsamarket.domain.member.repository.MemberRepository;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 import com.mutsa.mutsamarket.domain.salesitem.entity.Status;
 import com.mutsa.mutsamarket.domain.salesitem.repository.SalesItemRepository;
@@ -25,12 +25,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SalesItemService {
 	private final SalesItemRepository salesItemRepository;
+	private final MemberRepository memberRepository;
 	private final FileService fileService;
 	private final PasswordEncoder passwordEncoder;
-	public SalesItem save(SalesItem salesItem){
+	public Long save(String email, SalesItem salesItem){
 		try{
+			var member = memberRepository.findByEmailOrThrow(email);
 			salesItem.encodePassword(passwordEncoder);
-			return salesItemRepository.save(salesItem);
+			salesItem.associateMember(member);
+			return salesItemRepository.save(salesItem).getId();
 		}catch (Exception e){
 			throw new BusinessException(ErrorCode.DUPLICATED_ITEM_ERROR, e.getMessage());
 		}

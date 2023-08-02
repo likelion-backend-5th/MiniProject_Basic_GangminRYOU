@@ -1,7 +1,11 @@
 package com.mutsa.mutsamarket.domain.negotiation.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.mutsa.mutsamarket.domain.membernegotiation.entity.MemberNegotiation;
 import com.mutsa.mutsamarket.domain.salesitem.entity.SalesItem;
 
 import jakarta.persistence.Column;
@@ -14,6 +18,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -27,23 +32,19 @@ public class Negotiation {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "item_id", nullable = false)
 	private SalesItem salesItem;
-
 	@Column(nullable = false)
 	private Integer suggestedPrice;
-
 	@Enumerated(EnumType.STRING)
 	private NegotiationStatus status;
-
 	@Column(nullable = false)
 	private String writer;
-
 	@Column(nullable = false)
 	private String password;
+	@OneToMany(mappedBy = "negotiation")
+	private List<MemberNegotiation> memberNegotiations = new ArrayList<>();
 
 	@Builder
 	public Negotiation(SalesItem salesItem, Integer suggestedPrice, NegotiationStatus status, String writer,

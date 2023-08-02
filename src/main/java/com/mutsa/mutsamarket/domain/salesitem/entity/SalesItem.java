@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.mutsa.mutsamarket.common.exception.BusinessException;
 import com.mutsa.mutsamarket.common.exception.ErrorCode;
 import com.mutsa.mutsamarket.domain.comment.entity.Comment;
+import com.mutsa.mutsamarket.domain.member.entity.Member;
 import com.mutsa.mutsamarket.domain.negotiation.entity.Negotiation;
 
 import jakarta.annotation.PostConstruct;
@@ -17,10 +18,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -44,20 +48,19 @@ public class SalesItem {
 	private Integer minPriceWanted;
 	@Enumerated(EnumType.STRING)
 	private Status status;
-	@Column(nullable = false)
 	private String writer;
 	private String password;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 	@OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)
 	private List<Comment> comments = new ArrayList<>();
-
 	@OneToMany(mappedBy = "salesItem", cascade = CascadeType.ALL)
 	private List<Negotiation> negotiations = new ArrayList<>();
 
 	@Builder
-	public SalesItem(String title, String description, String imageUrl, int minPriceWanted, Status status,
-		String writer,
-		String password) {
+	public SalesItem(String title, String description, String imageUrl, Integer minPriceWanted, Status status,
+		String writer, String password, Member member) {
 		this.title = title;
 		this.description = description;
 		this.imageUrl = imageUrl;
@@ -65,6 +68,7 @@ public class SalesItem {
 		this.status = status;
 		this.writer = writer;
 		this.password = password;
+		this.member = member;
 	}
 
 	public void addComment(Comment comment){
@@ -72,6 +76,9 @@ public class SalesItem {
 	}
 
 	public void enrollNegotiataion(Negotiation negotiation){this.negotiations.add(negotiation);}
+	public void associateMember(Member member){
+		this.member = member;
+	}
 	public void update(String title, String description, Integer minPriceWanted, Status status){
 		this.title = title;
 		this.description = description;
